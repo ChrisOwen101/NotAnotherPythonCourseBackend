@@ -21,23 +21,22 @@ let REDIRECT_URL;
 
 if (production) {
   //TODO
-  REDIRECT_URL = "https://patreon-auth-server.herokuapp.com/oauth/redirect";
+  REDIRECT_URL =
+    "https://not-another-python-course-back.herokuapp.com/oauth/redirect";
 } else {
-  REDIRECT_URL = "http://localhost:5001/oauth/redirect";
+  REDIRECT_URL = "http://localhost:5555/oauth/redirect";
 }
 
 let FRONTEND_URL;
 
 if (production) {
   //TODO
-  FRONTEND_URL = "https://patreon-auth-server.herokuapp.com";
+  FRONTEND_URL = "https://not-another-python-course.vercel.app/";
 } else {
   FRONTEND_URL = "http://localhost:3000";
 }
 
 const oauthClient = oauth(clientId, clientSecret);
-
-const database = {};
 
 app.get("/oauth/redirect", (req, res) => {
   const { code } = req.query;
@@ -71,7 +70,7 @@ app.get("/", (req, res) => {
   res.send(JSON.stringify({ running: true }));
 });
 
-const server = app.listen(5001, () => {
+const server = app.listen(process.env.PORT || 5000, () => {
   const { port } = server.address();
   console.log(`Listening on http:/localhost:${port}`);
 });
