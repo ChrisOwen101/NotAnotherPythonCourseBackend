@@ -20,21 +20,23 @@ const production = process.env.PRODUCTION;
 let REDIRECT_URL;
 
 if (production) {
-  //TODO
   REDIRECT_URL =
     "https://not-another-python-course-back.herokuapp.com/oauth/redirect";
 } else {
   REDIRECT_URL = "http://localhost:5555/oauth/redirect";
 }
 
-let FRONTEND_URL;
+console.log(REDIRECT_URL);
 
+let FRONTEND_URL;
 if (production) {
   //TODO
   FRONTEND_URL = "https://not-another-python-course.vercel.app/";
 } else {
   FRONTEND_URL = "http://localhost:3000";
 }
+
+console.log(FRONTEND_URL);
 
 const oauthClient = oauth(clientId, clientSecret);
 
@@ -70,7 +72,7 @@ app.get("/", (req, res) => {
   res.send(JSON.stringify({ running: true }));
 });
 
-const server = app.listen(process.env.PORT || 5000, () => {
+const server = app.listen(process.env.PORT || 5555, () => {
   const { port } = server.address();
   console.log(`Listening on http:/localhost:${port}`);
 });
