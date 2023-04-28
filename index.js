@@ -15,8 +15,25 @@ app.use(cors());
 
 const clientId = process.env.PATREON_CLIENT_ID;
 const clientSecret = process.env.PATREON_CLIENT_SECRET;
-// redirect_uri should be the full redirect url
-const redirect = "http://localhost:5001/oauth/redirect";
+const production = process.env.PRODUCTION;
+
+let REDIRECT_URL;
+
+if (production) {
+  //TODO
+  REDIRECT_URL = "https://patreon-auth-server.herokuapp.com/oauth/redirect";
+} else {
+  REDIRECT_URL = "http://localhost:5001/oauth/redirect";
+}
+
+let FRONTEND_URL;
+
+if (production) {
+  //TODO
+  FRONTEND_URL = "https://patreon-auth-server.herokuapp.com";
+} else {
+  FRONTEND_URL = "http://localhost:3000";
+}
 
 const oauthClient = oauth(clientId, clientSecret);
 
@@ -27,9 +44,9 @@ app.get("/oauth/redirect", (req, res) => {
   let token;
 
   return oauthClient
-    .getTokens(code, redirect)
+    .getTokens(code, REDIRECT_URL)
     .then(({ access_token }) => {
-      return res.redirect(`http://localhost:3000/?token=${access_token}`);
+      return res.redirect(`${FRONTEND_URL}/?token=${access_token}`);
     })
     .catch((err) => {
       console.log(err);
