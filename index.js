@@ -74,5 +74,5 @@ app.get("/", (req, res) => {
 
 const server = app.listen(process.env.PORT || 5555, () => {
   const { port } = server.address();
-  console.log(`Listening on http:/localhost:${port}`);
+  console.log(`Listening on http://localhost:${port}`);
 });
